@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Direct3D9_Shader_Model_3_Decompiler
+namespace Direct3D9_Shader_Model_3_Disassembler
 {
     class Program
     {
