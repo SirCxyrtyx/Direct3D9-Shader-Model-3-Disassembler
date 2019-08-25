@@ -10,15 +10,27 @@ using System.Threading.Tasks;
 
 namespace Direct3D9_Shader_Model_3_Disassembler
 {
-    static class Extensions
+    public static class Extensions
     {
-        public static uint ReadUInt(this Stream stream)
+        public static float ReadFloat(this Stream stream)
+        {
+            var bytes = new byte[4];
+            stream.Read(bytes, 0, 4);
+            return BitConverter.ToSingle(bytes, 0);
+        }
+        public static int ReadInt32(this Stream stream)
+        {
+            var bytes = new byte[4];
+            stream.Read(bytes, 0, 4);
+            return BitConverter.ToInt32(bytes, 0);
+        }
+        public static uint ReadUInt32(this Stream stream)
         {
             var bytes = new byte[4];
             stream.Read(bytes, 0, 4);
             return BitConverter.ToUInt32(bytes, 0);
         }
-        public static ushort ReadUShort(this Stream stream)
+        public static ushort ReadUInt16(this Stream stream)
         {
             var bytes = new byte[2];
             stream.Read(bytes, 0, 2);
@@ -89,6 +101,11 @@ namespace Direct3D9_Shader_Model_3_Disassembler
             Contract.Assert(index < 32);
 
             return (word << (31 - index)) >> 31 == 1;
+        }
+
+        public static int NumDigits(this int i)
+        {
+            return i > 0 ? (int)Math.Log10(i) + 1 : 1;
         }
     }
 }

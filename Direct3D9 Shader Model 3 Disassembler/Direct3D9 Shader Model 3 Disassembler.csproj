@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConstantTable.cs" />
     <Compile Include="d3d9types.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Program.cs" />

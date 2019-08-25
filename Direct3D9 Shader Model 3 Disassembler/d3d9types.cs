@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Direct3D9_Shader_Model_3_Disassembler
 {
     //D3DSHADER_INSTRUCTION_OPCODE_TYPE
+    //https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/d3d9types/ne-d3d9types-_d3dshader_instruction_opcode_type
     public enum OpcodeType : uint
     {
         D3DSIO_NOP = 0,
@@ -98,14 +99,15 @@ namespace Direct3D9_Shader_Model_3_Disassembler
     }
 
     //_D3DSHADER_PARAM_REGISTER_TYPE
-    public enum RegisterType
+    //https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/d3d9types/ne-d3d9types-_d3dshader_param_register_type
+    public enum RegisterType : uint
     {
         D3DSPR_TEMP = 0,
         D3DSPR_INPUT = 1,
         D3DSPR_CONST = 2,
-        D3DSPR_ADDR = 3,
-        D3DSPR_TEXTURE = 3,
-        D3DSPR_RASTOUT = 4,
+        D3DSPR_ADDR = 3, //vertex shader
+        D3DSPR_TEXTURE = 3, //pixel shader
+        D3DSPR_RASTOUT = 4, 
         D3DSPR_ATTROUT = 5,
         D3DSPR_TEXCRDOUT = 6,
         D3DSPR_OUTPUT = 6,
@@ -123,16 +125,78 @@ namespace Direct3D9_Shader_Model_3_Disassembler
         D3DSPR_LABEL = 18,
         D3DSPR_PREDICATE = 19
     }
-
-    enum EREGISTER_SET
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxregister-set
+    public enum D3DXREGISTER_SET
     {
-        RS_BOOL,
-        RS_INT4,
-        RS_FLOAT4,
-        RS_SAMPLER
+        D3DXRS_BOOL,
+        D3DXRS_INT4,
+        D3DXRS_FLOAT4,
+        D3DXRS_SAMPLER
     }
 
-    public struct CTHeader
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxparameter-class
+    public enum D3DXPARAMETER_CLASS
+    {
+        D3DXPC_SCALAR,
+        D3DXPC_VECTOR,
+        D3DXPC_MATRIX_ROWS,
+        D3DXPC_MATRIX_COLUMNS,
+        D3DXPC_OBJECT,
+        D3DXPC_STRUCT,
+    }
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxparameter-type
+    public enum D3DXPARAMETER_TYPE
+    {
+        D3DXPT_VOID,
+        D3DXPT_BOOL,
+        D3DXPT_INT,
+        D3DXPT_FLOAT,
+        D3DXPT_STRING,
+        D3DXPT_TEXTURE,
+        D3DXPT_TEXTURE1D,
+        D3DXPT_TEXTURE2D,
+        D3DXPT_TEXTURE3D,
+        D3DXPT_TEXTURECUBE,
+        D3DXPT_SAMPLER,
+        D3DXPT_SAMPLER1D,
+        D3DXPT_SAMPLER2D,
+        D3DXPT_SAMPLER3D,
+        D3DXPT_SAMPLERCUBE,
+        D3DXPT_PIXELSHADER,
+        D3DXPT_VERTEXSHADER,
+        D3DXPT_PIXELFRAGMENT,
+        D3DXPT_VERTEXFRAGMENT,
+        D3DXPT_UNSUPPORTED,
+    }
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3ddeclusage
+    public enum D3DDECLUSAGE
+    {
+        D3DDECLUSAGE_POSITION = 0,
+        D3DDECLUSAGE_BLENDWEIGHT = 1,
+        D3DDECLUSAGE_BLENDINDICES = 2,
+        D3DDECLUSAGE_NORMAL = 3,
+        D3DDECLUSAGE_PSIZE = 4,
+        D3DDECLUSAGE_TEXCOORD = 5,
+        D3DDECLUSAGE_TANGENT = 6,
+        D3DDECLUSAGE_BINORMAL = 7,
+        D3DDECLUSAGE_TESSFACTOR = 8,
+        D3DDECLUSAGE_POSITIONT = 9,
+        D3DDECLUSAGE_COLOR = 10,
+        D3DDECLUSAGE_FOG = 11,
+        D3DDECLUSAGE_DEPTH = 12,
+        D3DDECLUSAGE_SAMPLE = 13,
+    }
+
+    public enum D3DSAMPLER_TEXTURE_TYPE
+    {
+        D3DSTT_UNKNOWN = 0, // uninitialized value
+        D3DSTT_2D = 2, // dcl_2d s# (for declaring a 2-D texture)
+        D3DSTT_CUBE = 3, // dcl_cube s# (for declaring a cube texture)
+        D3DSTT_VOLUME = 4, // dcl_volume s# (for declaring a volume texture)
+    }
+
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-constanttable
+    struct D3DConstantTable
     {
         public uint Size;
         public uint Creator;
@@ -142,19 +206,20 @@ namespace Direct3D9_Shader_Model_3_Disassembler
         public uint Flags;
         public uint Target;
 
-        public CTHeader(Stream stream)
+        public D3DConstantTable(Stream stream)
         {
-            Size = stream.ReadUInt();
-            Creator = stream.ReadUInt();
-            Version = stream.ReadUInt();
-            Constants = stream.ReadUInt();
-            ConstantInfo = stream.ReadUInt();
-            Flags = stream.ReadUInt();
-            Target = stream.ReadUInt();
+            Size = stream.ReadUInt32();
+            Creator = stream.ReadUInt32();
+            Version = stream.ReadUInt32();
+            Constants = stream.ReadUInt32();
+            ConstantInfo = stream.ReadUInt32();
+            Flags = stream.ReadUInt32();
+            Target = stream.ReadUInt32();
         }
     }
 
-    public struct CTInfo
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-constantinfo
+    public struct ConstRegisterInfo
     {
         public uint Name;
         public ushort RegisterSet;
@@ -164,38 +229,61 @@ namespace Direct3D9_Shader_Model_3_Disassembler
         public uint TypeInfo;
         public uint DefaultValue;
 
-        public CTInfo(Stream stream)
+        public ConstRegisterInfo(Stream stream)
         {
-            Name = stream.ReadUInt();
-            RegisterSet = stream.ReadUShort();
-            RegisterIndex = stream.ReadUShort();
-            RegisterCount = stream.ReadUShort();
-            Reserved = stream.ReadUShort();
-            TypeInfo = stream.ReadUInt();
-            DefaultValue = stream.ReadUInt();
+            Name = stream.ReadUInt32();
+            RegisterSet = stream.ReadUInt16();
+            RegisterIndex = stream.ReadUInt16();
+            RegisterCount = stream.ReadUInt16();
+            Reserved = stream.ReadUInt16();
+            TypeInfo = stream.ReadUInt32();
+            DefaultValue = stream.ReadUInt32();
         }
     }
 
-    struct CTType
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-typeinfo
+    struct TypeInfo
     {
-        ushort Class;
-        ushort Type;
-        ushort Rows;
-        ushort Columns;
-        ushort Elements;
-        ushort StructMembers;
-        uint StructMemberInfo;
+        public ushort Class;
+        public ushort Type;
+        public ushort Rows;
+        public ushort Columns;
+        public ushort Elements;
+        public ushort StructMembers;
+        public uint StructMemberInfo;
 
-        public CTType(Stream stream)
+        public TypeInfo(Stream stream)
         {
-            Class = stream.ReadUShort();
-            Type = stream.ReadUShort();
-            Rows = stream.ReadUShort();
-            Columns = stream.ReadUShort();
-            Elements = stream.ReadUShort();
-            StructMembers = stream.ReadUShort();
-            StructMemberInfo = stream.ReadUInt();
+            Class = stream.ReadUInt16();
+            Type = stream.ReadUInt16();
+            Rows = stream.ReadUInt16();
+            Columns = stream.ReadUInt16();
+            Elements = stream.ReadUInt16();
+            StructMembers = stream.ReadUInt16();
+            StructMemberInfo = stream.ReadUInt32();
         }
+    }
+
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-structmemberinfo
+    struct StructMemberInfo
+    {
+        public uint Name;
+        public uint TypeInfo;
+
+        public StructMemberInfo(uint name, uint typeInfo)
+        {
+            Name = name;
+            TypeInfo = typeInfo;
+        }
+    }
+
+    //https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx9-graphics-reference-asm-ps-instructions-modifiers-ps-2-0
+    [Flags]
+    public enum ResultModifiers
+    {
+        Saturate = 1,
+        Partial_Precision = 2,
+        Centroid = 4
     }
 
     public static class d3d9types
@@ -253,7 +341,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
             {OpcodeType.D3DSIO_DEFI, "defi"},
             {OpcodeType.D3DSIO_TEXCOORD, "texcoord"},
             {OpcodeType.D3DSIO_TEXKILL, "texkill"},
-            {OpcodeType.D3DSIO_TEX, "tex"},
+            {OpcodeType.D3DSIO_TEX, "texld"},
             {OpcodeType.D3DSIO_TEXBEM, "texbem"},
             {OpcodeType.D3DSIO_TEXBEML, "texbeml"},
             {OpcodeType.D3DSIO_TEXREG2AR, "texreg2ar"},
@@ -287,6 +375,91 @@ namespace Direct3D9_Shader_Model_3_Disassembler
             {OpcodeType.D3DSIO_PHASE, "phase"},
             {OpcodeType.D3DSIO_COMMENT, ""},
             {OpcodeType.D3DSIO_END, ""},
+        };
+
+        //https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx9-graphics-reference-asm-vs-registers-vs-3-0
+        //https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx9-graphics-reference-asm-ps-registers-ps-3-0
+        public static Dictionary<RegisterType, string> registerNames = new Dictionary<RegisterType, string>
+        {
+            [RegisterType.D3DSPR_TEMP] = "r",
+            [RegisterType.D3DSPR_INPUT] = "v",
+            [RegisterType.D3DSPR_CONST] = "c",
+            [RegisterType.D3DSPR_ADDR] = "a", //vertex shader
+            [RegisterType.D3DSPR_TEXTURE] = "t", //pixel shader
+            [RegisterType.D3DSPR_RASTOUT] = "o",
+            [RegisterType.D3DSPR_ATTROUT] = "D3DSPR_ATTROUT",
+            [RegisterType.D3DSPR_TEXCRDOUT] = "o", //vertex shader
+            [RegisterType.D3DSPR_OUTPUT] = "o", //pixel shader
+            [RegisterType.D3DSPR_CONSTINT] = "i",
+            [RegisterType.D3DSPR_COLOROUT] = "oC",
+            [RegisterType.D3DSPR_DEPTHOUT] = "oDepth",
+            [RegisterType.D3DSPR_SAMPLER] = "s",
+            [RegisterType.D3DSPR_CONST2] = "D3DSPR_CONST2",
+            [RegisterType.D3DSPR_CONST3] = "D3DSPR_CONST3",
+            [RegisterType.D3DSPR_CONST4] = "D3DSPR_CONST4",
+            [RegisterType.D3DSPR_CONSTBOOL] = "b",
+            [RegisterType.D3DSPR_LOOP] = "aL",
+            [RegisterType.D3DSPR_TEMPFLOAT16] = "D3DSPR_TEMPFLOAT16",
+            [RegisterType.D3DSPR_MISCTYPE] = "D3DSPR_MISCTYPE",
+            [RegisterType.D3DSPR_LABEL] = "l",
+            [RegisterType.D3DSPR_PREDICATE] = "p",
+        };
+
+        public static Dictionary<D3DDECLUSAGE, string> declarationTypes = new Dictionary<D3DDECLUSAGE, string>
+        {
+            [D3DDECLUSAGE.D3DDECLUSAGE_POSITION] = "_position",
+            [D3DDECLUSAGE.D3DDECLUSAGE_BLENDWEIGHT] = "_blendweight",
+            [D3DDECLUSAGE.D3DDECLUSAGE_BLENDINDICES] = "_blendindices",
+            [D3DDECLUSAGE.D3DDECLUSAGE_NORMAL] = "_normal",
+            [D3DDECLUSAGE.D3DDECLUSAGE_PSIZE] = "_psize",
+            [D3DDECLUSAGE.D3DDECLUSAGE_TEXCOORD] = "_texcoord",
+            [D3DDECLUSAGE.D3DDECLUSAGE_TANGENT] = "_tangent",
+            [D3DDECLUSAGE.D3DDECLUSAGE_BINORMAL] = "_binormal",
+            [D3DDECLUSAGE.D3DDECLUSAGE_TESSFACTOR] = "_tessfactor",
+            [D3DDECLUSAGE.D3DDECLUSAGE_POSITIONT] = "_positiont",
+            [D3DDECLUSAGE.D3DDECLUSAGE_COLOR] = "_color",
+            [D3DDECLUSAGE.D3DDECLUSAGE_FOG] = "_fog",
+            [D3DDECLUSAGE.D3DDECLUSAGE_DEPTH] = "_depth",
+            [D3DDECLUSAGE.D3DDECLUSAGE_SAMPLE] = "_sample",
+        };
+
+        public static Dictionary<D3DSAMPLER_TEXTURE_TYPE, string> samplerTexTypes = new Dictionary<D3DSAMPLER_TEXTURE_TYPE, string>
+        {
+            [D3DSAMPLER_TEXTURE_TYPE.D3DSTT_2D] = "_2d",
+            [D3DSAMPLER_TEXTURE_TYPE.D3DSTT_CUBE] = "_cube",
+            [D3DSAMPLER_TEXTURE_TYPE.D3DSTT_VOLUME] = "_volume",
+        };
+
+        public static Dictionary<D3DXPARAMETER_TYPE, string> paramTypes = new Dictionary<D3DXPARAMETER_TYPE, string>
+        {
+            [D3DXPARAMETER_TYPE.D3DXPT_VOID] = "void",
+            [D3DXPARAMETER_TYPE.D3DXPT_BOOL] = "bool",
+            [D3DXPARAMETER_TYPE.D3DXPT_INT] = "int",
+            [D3DXPARAMETER_TYPE.D3DXPT_FLOAT] = "float",
+            [D3DXPARAMETER_TYPE.D3DXPT_STRING] = "string",
+            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE] = "texture",
+            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE1D] = "texture1D",
+            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE2D] = "texture2D",
+            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE3D] = "texture3D",
+            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURECUBE] = "textureCUBE",
+            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER] = "sampler",
+            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER1D] = "sampler1D",
+            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER2D] = "sampler2D",
+            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER3D] = "sampler3D",
+            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLERCUBE] = "samplerCUBE",
+            [D3DXPARAMETER_TYPE.D3DXPT_PIXELSHADER] = "pixelshader",
+            [D3DXPARAMETER_TYPE.D3DXPT_VERTEXSHADER] = "vertexshader",
+            [D3DXPARAMETER_TYPE.D3DXPT_PIXELFRAGMENT] = "pixelfragment",
+            [D3DXPARAMETER_TYPE.D3DXPT_VERTEXFRAGMENT] = "vertexfragment",
+            [D3DXPARAMETER_TYPE.D3DXPT_UNSUPPORTED] = "UNSUPPORTED",
+        };
+
+        public static Dictionary<D3DXREGISTER_SET, string> registerSets = new Dictionary<D3DXREGISTER_SET, string>
+        {
+            [D3DXREGISTER_SET.D3DXRS_BOOL] = "b",
+            [D3DXREGISTER_SET.D3DXRS_INT4] = "i",
+            [D3DXREGISTER_SET.D3DXRS_FLOAT4] = "c",
+            [D3DXREGISTER_SET.D3DXRS_SAMPLER] = "s"
         };
     }
 }
