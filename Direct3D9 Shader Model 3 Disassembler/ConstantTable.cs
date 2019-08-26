@@ -6,9 +6,54 @@ using System.Threading.Tasks;
 
 namespace Direct3D9_Shader_Model_3_Disassembler
 {
-    public class ShaderSignature
+    public class ShaderInfo
     {
+        public Frequency Frequency;
         public ConstantInfo[] Constants;
+        public List<ParameterDeclaration> InputDeclarations = new List<ParameterDeclaration>();
+        public List<ParameterDeclaration> OutputDeclarations = new List<ParameterDeclaration>();
+    }
+    public enum Frequency : uint
+    {
+        Vertex = 0xFFFE,
+        Pixel = 0xFFFF,
+    }
+
+    public class ParameterDeclaration
+    {
+        public readonly D3DDECLUSAGE Usage;
+        public readonly int UsageIndex;
+        public readonly D3DSHADER_PARAM_REGISTER_TYPE RegisterType;
+        public readonly int RegisterIndex;
+        public readonly WriteMask WriteMask;
+        public readonly bool PartialPrecision;
+        public int Size => (WriteMask.X ? 1 : 0) + (WriteMask.Y ? 1 : 0) + (WriteMask.Z ? 1 : 0) + (WriteMask.W ? 1 : 0);
+
+        public ParameterDeclaration(D3DDECLUSAGE usage, int usageIndex, D3DSHADER_PARAM_REGISTER_TYPE registerType, int registerIndex, WriteMask writeMask, bool partialPrecision)
+        {
+            Usage = usage;
+            UsageIndex = usageIndex;
+            RegisterType = registerType;
+            RegisterIndex = registerIndex;
+            WriteMask = writeMask;
+            PartialPrecision = partialPrecision;
+        }
+    }
+
+    public readonly struct WriteMask
+    {
+        public readonly bool X;
+        public readonly bool Y;
+        public readonly bool Z;
+        public readonly bool W;
+
+        public WriteMask(bool x, bool y, bool z, bool w)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+        }
     }
 
     public class ConstantInfo

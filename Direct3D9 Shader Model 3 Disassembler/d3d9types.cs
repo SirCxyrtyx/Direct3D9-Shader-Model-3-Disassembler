@@ -9,7 +9,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
 {
     //D3DSHADER_INSTRUCTION_OPCODE_TYPE
     //https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/d3d9types/ne-d3d9types-_d3dshader_instruction_opcode_type
-    public enum OpcodeType : uint
+    internal enum OpcodeType : uint
     {
         D3DSIO_NOP = 0,
         D3DSIO_MOV = 1,
@@ -100,93 +100,94 @@ namespace Direct3D9_Shader_Model_3_Disassembler
 
     //_D3DSHADER_PARAM_REGISTER_TYPE
     //https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/d3d9types/ne-d3d9types-_d3dshader_param_register_type
-    public enum RegisterType : uint
+    public enum D3DSHADER_PARAM_REGISTER_TYPE : uint
     {
-        D3DSPR_TEMP = 0,
-        D3DSPR_INPUT = 1,
-        D3DSPR_CONST = 2,
-        D3DSPR_ADDR = 3, //vertex shader
-        D3DSPR_TEXTURE = 3, //pixel shader
-        D3DSPR_RASTOUT = 4, 
-        D3DSPR_ATTROUT = 5,
-        D3DSPR_TEXCRDOUT = 6,
-        D3DSPR_OUTPUT = 6,
-        D3DSPR_CONSTINT = 7,
-        D3DSPR_COLOROUT = 8,
-        D3DSPR_DEPTHOUT = 9,
-        D3DSPR_SAMPLER = 10,
-        D3DSPR_CONST2 = 11,
-        D3DSPR_CONST3 = 12,
-        D3DSPR_CONST4 = 13,
-        D3DSPR_CONSTBOOL = 14,
-        D3DSPR_LOOP = 15,
-        D3DSPR_TEMPFLOAT16 = 16,
-        D3DSPR_MISCTYPE = 17,
-        D3DSPR_LABEL = 18,
-        D3DSPR_PREDICATE = 19
+        TEMP = 0,
+        INPUT = 1,
+        CONST = 2,
+        ADDR = 3, //vertex shader
+        TEXTURE = 3, //pixel shader
+        RASTOUT = 4, 
+        ATTROUT = 5,
+        TEXCRDOUT = 6,
+        OUTPUT = 6,
+        CONSTINT = 7,
+        COLOROUT = 8,
+        DEPTHOUT = 9,
+        SAMPLER = 10,
+        CONST2 = 11,
+        CONST3 = 12,
+        CONST4 = 13,
+        CONSTBOOL = 14,
+        LOOP = 15,
+        TEMPFLOAT16 = 16,
+        MISCTYPE = 17,
+        LABEL = 18,
+        PREDICATE = 19
     }
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxregister-set
     public enum D3DXREGISTER_SET
     {
-        D3DXRS_BOOL,
-        D3DXRS_INT4,
-        D3DXRS_FLOAT4,
-        D3DXRS_SAMPLER
+        BOOL,
+        INT4,
+        FLOAT4,
+        SAMPLER
     }
 
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxparameter-class
     public enum D3DXPARAMETER_CLASS
     {
-        D3DXPC_SCALAR,
-        D3DXPC_VECTOR,
-        D3DXPC_MATRIX_ROWS,
-        D3DXPC_MATRIX_COLUMNS,
-        D3DXPC_OBJECT,
-        D3DXPC_STRUCT,
+        SCALAR,
+        VECTOR,
+        MATRIX_ROWS,
+        MATRIX_COLUMNS,
+        OBJECT,
+        STRUCT,
     }
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxparameter-type
     public enum D3DXPARAMETER_TYPE
     {
-        D3DXPT_VOID,
-        D3DXPT_BOOL,
-        D3DXPT_INT,
-        D3DXPT_FLOAT,
-        D3DXPT_STRING,
-        D3DXPT_TEXTURE,
-        D3DXPT_TEXTURE1D,
-        D3DXPT_TEXTURE2D,
-        D3DXPT_TEXTURE3D,
-        D3DXPT_TEXTURECUBE,
-        D3DXPT_SAMPLER,
-        D3DXPT_SAMPLER1D,
-        D3DXPT_SAMPLER2D,
-        D3DXPT_SAMPLER3D,
-        D3DXPT_SAMPLERCUBE,
-        D3DXPT_PIXELSHADER,
-        D3DXPT_VERTEXSHADER,
-        D3DXPT_PIXELFRAGMENT,
-        D3DXPT_VERTEXFRAGMENT,
-        D3DXPT_UNSUPPORTED,
+        VOID,
+        BOOL,
+        INT,
+        FLOAT,
+        STRING,
+        TEXTURE,
+        TEXTURE1D,
+        TEXTURE2D,
+        TEXTURE3D,
+        TEXTURECUBE,
+        SAMPLER,
+        SAMPLER1D,
+        SAMPLER2D,
+        SAMPLER3D,
+        SAMPLERCUBE,
+        PIXELSHADER,
+        VERTEXSHADER,
+        PIXELFRAGMENT,
+        VERTEXFRAGMENT,
+        UNSUPPORTED,
     }
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3ddeclusage
     public enum D3DDECLUSAGE
     {
-        D3DDECLUSAGE_POSITION = 0,
-        D3DDECLUSAGE_BLENDWEIGHT = 1,
-        D3DDECLUSAGE_BLENDINDICES = 2,
-        D3DDECLUSAGE_NORMAL = 3,
-        D3DDECLUSAGE_PSIZE = 4,
-        D3DDECLUSAGE_TEXCOORD = 5,
-        D3DDECLUSAGE_TANGENT = 6,
-        D3DDECLUSAGE_BINORMAL = 7,
-        D3DDECLUSAGE_TESSFACTOR = 8,
-        D3DDECLUSAGE_POSITIONT = 9,
-        D3DDECLUSAGE_COLOR = 10,
-        D3DDECLUSAGE_FOG = 11,
-        D3DDECLUSAGE_DEPTH = 12,
-        D3DDECLUSAGE_SAMPLE = 13,
+        POSITION = 0,
+        BLENDWEIGHT = 1,
+        BLENDINDICES = 2,
+        NORMAL = 3,
+        PSIZE = 4,
+        TEXCOORD = 5,
+        TANGENT = 6,
+        BINORMAL = 7,
+        TESSFACTOR = 8,
+        POSITIONT = 9,
+        COLOR = 10,
+        FOG = 11,
+        DEPTH = 12,
+        SAMPLE = 13,
     }
 
+    //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dsampler-texture-type
     public enum D3DSAMPLER_TEXTURE_TYPE
     {
         D3DSTT_UNKNOWN = 0, // uninitialized value
@@ -196,7 +197,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
     }
 
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-constanttable
-    struct D3DConstantTable
+    internal struct D3DConstantTable
     {
         public uint Size;
         public uint Creator;
@@ -219,7 +220,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
     }
 
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-constantinfo
-    public struct ConstRegisterInfo
+    internal struct ConstRegisterInfo
     {
         public uint Name;
         public ushort RegisterSet;
@@ -242,7 +243,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
     }
 
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-typeinfo
-    struct TypeInfo
+    internal struct TypeInfo
     {
         public ushort Class;
         public ushort Type;
@@ -265,7 +266,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
     }
 
     //https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3dxshader-structmemberinfo
-    struct StructMemberInfo
+    internal struct StructMemberInfo
     {
         public uint Name;
         public uint TypeInfo;
@@ -286,7 +287,7 @@ namespace Direct3D9_Shader_Model_3_Disassembler
         Centroid = 4
     }
 
-    public static class d3d9types
+    internal static class d3d9types
     {
         public static Dictionary<OpcodeType, string> opcodeNames = new Dictionary<OpcodeType, string>
         {
@@ -379,48 +380,48 @@ namespace Direct3D9_Shader_Model_3_Disassembler
 
         //https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx9-graphics-reference-asm-vs-registers-vs-3-0
         //https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx9-graphics-reference-asm-ps-registers-ps-3-0
-        public static Dictionary<RegisterType, string> registerNames = new Dictionary<RegisterType, string>
+        public static Dictionary<D3DSHADER_PARAM_REGISTER_TYPE, string> registerNames = new Dictionary<D3DSHADER_PARAM_REGISTER_TYPE, string>
         {
-            [RegisterType.D3DSPR_TEMP] = "r",
-            [RegisterType.D3DSPR_INPUT] = "v",
-            [RegisterType.D3DSPR_CONST] = "c",
-            [RegisterType.D3DSPR_ADDR] = "a", //vertex shader
-            [RegisterType.D3DSPR_TEXTURE] = "t", //pixel shader
-            [RegisterType.D3DSPR_RASTOUT] = "o",
-            [RegisterType.D3DSPR_ATTROUT] = "D3DSPR_ATTROUT",
-            [RegisterType.D3DSPR_TEXCRDOUT] = "o", //vertex shader
-            [RegisterType.D3DSPR_OUTPUT] = "o", //pixel shader
-            [RegisterType.D3DSPR_CONSTINT] = "i",
-            [RegisterType.D3DSPR_COLOROUT] = "oC",
-            [RegisterType.D3DSPR_DEPTHOUT] = "oDepth",
-            [RegisterType.D3DSPR_SAMPLER] = "s",
-            [RegisterType.D3DSPR_CONST2] = "D3DSPR_CONST2",
-            [RegisterType.D3DSPR_CONST3] = "D3DSPR_CONST3",
-            [RegisterType.D3DSPR_CONST4] = "D3DSPR_CONST4",
-            [RegisterType.D3DSPR_CONSTBOOL] = "b",
-            [RegisterType.D3DSPR_LOOP] = "aL",
-            [RegisterType.D3DSPR_TEMPFLOAT16] = "D3DSPR_TEMPFLOAT16",
-            [RegisterType.D3DSPR_MISCTYPE] = "D3DSPR_MISCTYPE",
-            [RegisterType.D3DSPR_LABEL] = "l",
-            [RegisterType.D3DSPR_PREDICATE] = "p",
+            [D3DSHADER_PARAM_REGISTER_TYPE.TEMP] = "r",
+            [D3DSHADER_PARAM_REGISTER_TYPE.INPUT] = "v",
+            [D3DSHADER_PARAM_REGISTER_TYPE.CONST] = "c",
+            [D3DSHADER_PARAM_REGISTER_TYPE.ADDR] = "a", //vertex shader
+            [D3DSHADER_PARAM_REGISTER_TYPE.TEXTURE] = "t", //pixel shader
+            [D3DSHADER_PARAM_REGISTER_TYPE.RASTOUT] = "o",
+            [D3DSHADER_PARAM_REGISTER_TYPE.ATTROUT] = "ATTROUT",
+            [D3DSHADER_PARAM_REGISTER_TYPE.TEXCRDOUT] = "o", //vertex shader
+            [D3DSHADER_PARAM_REGISTER_TYPE.OUTPUT] = "o", //pixel shader
+            [D3DSHADER_PARAM_REGISTER_TYPE.CONSTINT] = "i",
+            [D3DSHADER_PARAM_REGISTER_TYPE.COLOROUT] = "oC",
+            [D3DSHADER_PARAM_REGISTER_TYPE.DEPTHOUT] = "oDepth",
+            [D3DSHADER_PARAM_REGISTER_TYPE.SAMPLER] = "s",
+            [D3DSHADER_PARAM_REGISTER_TYPE.CONST2] = "CONST2",
+            [D3DSHADER_PARAM_REGISTER_TYPE.CONST3] = "CONST3",
+            [D3DSHADER_PARAM_REGISTER_TYPE.CONST4] = "CONST4",
+            [D3DSHADER_PARAM_REGISTER_TYPE.CONSTBOOL] = "b",
+            [D3DSHADER_PARAM_REGISTER_TYPE.LOOP] = "aL",
+            [D3DSHADER_PARAM_REGISTER_TYPE.TEMPFLOAT16] = "TEMPFLOAT16",
+            [D3DSHADER_PARAM_REGISTER_TYPE.MISCTYPE] = "MISCTYPE",
+            [D3DSHADER_PARAM_REGISTER_TYPE.LABEL] = "l",
+            [D3DSHADER_PARAM_REGISTER_TYPE.PREDICATE] = "p",
         };
 
         public static Dictionary<D3DDECLUSAGE, string> declarationTypes = new Dictionary<D3DDECLUSAGE, string>
         {
-            [D3DDECLUSAGE.D3DDECLUSAGE_POSITION] = "_position",
-            [D3DDECLUSAGE.D3DDECLUSAGE_BLENDWEIGHT] = "_blendweight",
-            [D3DDECLUSAGE.D3DDECLUSAGE_BLENDINDICES] = "_blendindices",
-            [D3DDECLUSAGE.D3DDECLUSAGE_NORMAL] = "_normal",
-            [D3DDECLUSAGE.D3DDECLUSAGE_PSIZE] = "_psize",
-            [D3DDECLUSAGE.D3DDECLUSAGE_TEXCOORD] = "_texcoord",
-            [D3DDECLUSAGE.D3DDECLUSAGE_TANGENT] = "_tangent",
-            [D3DDECLUSAGE.D3DDECLUSAGE_BINORMAL] = "_binormal",
-            [D3DDECLUSAGE.D3DDECLUSAGE_TESSFACTOR] = "_tessfactor",
-            [D3DDECLUSAGE.D3DDECLUSAGE_POSITIONT] = "_positiont",
-            [D3DDECLUSAGE.D3DDECLUSAGE_COLOR] = "_color",
-            [D3DDECLUSAGE.D3DDECLUSAGE_FOG] = "_fog",
-            [D3DDECLUSAGE.D3DDECLUSAGE_DEPTH] = "_depth",
-            [D3DDECLUSAGE.D3DDECLUSAGE_SAMPLE] = "_sample",
+            [D3DDECLUSAGE.POSITION] = "_position",
+            [D3DDECLUSAGE.BLENDWEIGHT] = "_blendweight",
+            [D3DDECLUSAGE.BLENDINDICES] = "_blendindices",
+            [D3DDECLUSAGE.NORMAL] = "_normal",
+            [D3DDECLUSAGE.PSIZE] = "_psize",
+            [D3DDECLUSAGE.TEXCOORD] = "_texcoord",
+            [D3DDECLUSAGE.TANGENT] = "_tangent",
+            [D3DDECLUSAGE.BINORMAL] = "_binormal",
+            [D3DDECLUSAGE.TESSFACTOR] = "_tessfactor",
+            [D3DDECLUSAGE.POSITIONT] = "_positiont",
+            [D3DDECLUSAGE.COLOR] = "_color",
+            [D3DDECLUSAGE.FOG] = "_fog",
+            [D3DDECLUSAGE.DEPTH] = "_depth",
+            [D3DDECLUSAGE.SAMPLE] = "_sample",
         };
 
         public static Dictionary<D3DSAMPLER_TEXTURE_TYPE, string> samplerTexTypes = new Dictionary<D3DSAMPLER_TEXTURE_TYPE, string>
@@ -432,34 +433,34 @@ namespace Direct3D9_Shader_Model_3_Disassembler
 
         public static Dictionary<D3DXPARAMETER_TYPE, string> paramTypes = new Dictionary<D3DXPARAMETER_TYPE, string>
         {
-            [D3DXPARAMETER_TYPE.D3DXPT_VOID] = "void",
-            [D3DXPARAMETER_TYPE.D3DXPT_BOOL] = "bool",
-            [D3DXPARAMETER_TYPE.D3DXPT_INT] = "int",
-            [D3DXPARAMETER_TYPE.D3DXPT_FLOAT] = "float",
-            [D3DXPARAMETER_TYPE.D3DXPT_STRING] = "string",
-            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE] = "texture",
-            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE1D] = "texture1D",
-            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE2D] = "texture2D",
-            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURE3D] = "texture3D",
-            [D3DXPARAMETER_TYPE.D3DXPT_TEXTURECUBE] = "textureCUBE",
-            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER] = "sampler",
-            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER1D] = "sampler1D",
-            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER2D] = "sampler2D",
-            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLER3D] = "sampler3D",
-            [D3DXPARAMETER_TYPE.D3DXPT_SAMPLERCUBE] = "samplerCUBE",
-            [D3DXPARAMETER_TYPE.D3DXPT_PIXELSHADER] = "pixelshader",
-            [D3DXPARAMETER_TYPE.D3DXPT_VERTEXSHADER] = "vertexshader",
-            [D3DXPARAMETER_TYPE.D3DXPT_PIXELFRAGMENT] = "pixelfragment",
-            [D3DXPARAMETER_TYPE.D3DXPT_VERTEXFRAGMENT] = "vertexfragment",
-            [D3DXPARAMETER_TYPE.D3DXPT_UNSUPPORTED] = "UNSUPPORTED",
+            [D3DXPARAMETER_TYPE.VOID] = "void",
+            [D3DXPARAMETER_TYPE.BOOL] = "bool",
+            [D3DXPARAMETER_TYPE.INT] = "int",
+            [D3DXPARAMETER_TYPE.FLOAT] = "float",
+            [D3DXPARAMETER_TYPE.STRING] = "string",
+            [D3DXPARAMETER_TYPE.TEXTURE] = "texture",
+            [D3DXPARAMETER_TYPE.TEXTURE1D] = "texture1D",
+            [D3DXPARAMETER_TYPE.TEXTURE2D] = "texture2D",
+            [D3DXPARAMETER_TYPE.TEXTURE3D] = "texture3D",
+            [D3DXPARAMETER_TYPE.TEXTURECUBE] = "textureCUBE",
+            [D3DXPARAMETER_TYPE.SAMPLER] = "sampler",
+            [D3DXPARAMETER_TYPE.SAMPLER1D] = "sampler1D",
+            [D3DXPARAMETER_TYPE.SAMPLER2D] = "sampler2D",
+            [D3DXPARAMETER_TYPE.SAMPLER3D] = "sampler3D",
+            [D3DXPARAMETER_TYPE.SAMPLERCUBE] = "samplerCUBE",
+            [D3DXPARAMETER_TYPE.PIXELSHADER] = "pixelshader",
+            [D3DXPARAMETER_TYPE.VERTEXSHADER] = "vertexshader",
+            [D3DXPARAMETER_TYPE.PIXELFRAGMENT] = "pixelfragment",
+            [D3DXPARAMETER_TYPE.VERTEXFRAGMENT] = "vertexfragment",
+            [D3DXPARAMETER_TYPE.UNSUPPORTED] = "UNSUPPORTED",
         };
 
         public static Dictionary<D3DXREGISTER_SET, string> registerSets = new Dictionary<D3DXREGISTER_SET, string>
         {
-            [D3DXREGISTER_SET.D3DXRS_BOOL] = "b",
-            [D3DXREGISTER_SET.D3DXRS_INT4] = "i",
-            [D3DXREGISTER_SET.D3DXRS_FLOAT4] = "c",
-            [D3DXREGISTER_SET.D3DXRS_SAMPLER] = "s"
+            [D3DXREGISTER_SET.BOOL] = "b",
+            [D3DXREGISTER_SET.INT4] = "i",
+            [D3DXREGISTER_SET.FLOAT4] = "c",
+            [D3DXREGISTER_SET.SAMPLER] = "s"
         };
     }
 }

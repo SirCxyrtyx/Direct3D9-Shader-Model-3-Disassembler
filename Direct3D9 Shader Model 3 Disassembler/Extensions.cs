@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Direct3D9_Shader_Model_3_Disassembler
 {
-    public static class Extensions
+    internal static class Extensions
     {
         public static float ReadFloat(this Stream stream)
         {
@@ -51,40 +51,6 @@ namespace Direct3D9_Shader_Model_3_Disassembler
             byte[] buff = new byte[length];
             stream.Read(buff, 0, length);
             return Encoding.ASCII.GetString(buff);
-        }
-
-        public static int[] Unpack(this int word, params (short end, short start)[] ranges)
-        {
-            Contract.Assert(ranges.Length > 0, "need to provide ranges");
-            short prev = -1;
-            foreach (var range in ranges)
-            {
-                if (range.end > 32)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(ranges), "arguments must be <= 32");
-                }
-                if (range.start <= prev || range.end < range.start)
-                {
-                    throw new ArgumentException("arguments must be in order");
-                }
-
-                prev = range.end;
-            }
-            BitVector32 bitVec = new BitVector32(word);
-            var sections = new List<BitVector32.Section>();
-            BitVector32.Section prevSection = BitVector32.CreateSection((short)((1 << (ranges[0].end - ranges[0].start)) - 1));
-            sections.Add(prevSection);
-            for (int i = 1; i < ranges.Length; i++)
-            {
-                var (end, start) = ranges[i];
-                {
-                    short maxValue = (short)((1 << (end - start)) - 1);
-                    prevSection = BitVector32.CreateSection(maxValue, prevSection);
-                    sections.Add(prevSection);
-                }
-            }
-
-            return sections.Select(section => bitVec[section]).ToArray();
         }
 
         public static uint bits(this uint word, byte from, byte to)
